@@ -3,6 +3,7 @@ module("MainTipsView", package.seeall)
 require "script/module/config/AudioHelper"
 require "script/model/DataCache"
 require "script/network/WebSocketClient"
+require "script/module/fighting/FightingData"
 -- 资源文件setAnchorPoint
 local activity_list = "n_ui/funtiontips_1.json"
 local m_fnGetWidget = g_fnGetWidgetByName
@@ -154,9 +155,25 @@ function huadong(layBack, layOne,layTwo,layThree )
                         local layout = MainJoionOrCreateCtrl.create()
                         LayerManager.addLayout(layout,nil,g_tbTouchPriority.popDlg)
                         return false
-                    else
-                        require "script/module/public/ShowNotice"
-                       ShowNotice.showShellInfo("功能尚未开启")
+                    elseif (centen~=nil and centen:getName() == "zj") then 
+                        require "script/module/fighting/MainFightingCtrl"
+                        FightingData._groupId = nil
+                         FightingData.roomType = 1
+                          require "script/module/public/ShowNotice"
+                       ShowNotice.showShellInfo("中级房")
+                        local fight = MainFightingCtrl.create()
+                        LayerManager.changeModule(fight, MainFightingCtrl.moduleName(), {}, true)
+                     elseif (centen~=nil and centen:getName() == "cj") then
+                        require "script/module/fighting/MainFightingCtrl"
+                         require "script/module/public/ShowNotice"
+                       ShowNotice.showShellInfo("初级房")
+                        FightingData._groupId = nil
+                         FightingData.roomType = 0
+                        local fight = MainFightingCtrl.create()
+                        LayerManager.changeModule(fight, MainFightingCtrl.moduleName(), {}, true)
+                    
+                       --  require "script/module/public/ShowNotice"
+                       -- ShowNotice.showShellInfo("功能尚未开启")
                     end
                     
                     -- require "script/module/fighting/MainFightingCtrl"
@@ -226,7 +243,7 @@ function create()
                                             MainSettingCtrl.create()
                                         end
                                   end)
-    require "script/module/fighting/FightingData"
+   
     -- -- 初始化WebSocket
     -- local cjson = require "cjson"
     -- local testData = FightingData.xulian()

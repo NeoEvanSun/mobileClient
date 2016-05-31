@@ -9,7 +9,7 @@ end
 _isReady = false
 local userId = DataCache.getUserInfo().userId
 local cjson = require "cjson"
-local roomType = 3
+roomType = nil
 _groupId = nil
 _password = nil
 
@@ -156,9 +156,14 @@ function joinGame(  password )
     local sendBeginText = {}
     local content = {}
     local intDatas = {}
+    if roomType == nil then
+        roomType =3
+    end
     content["roomType"] = roomType 
-    content["groupId"] = _groupId 
-    content["password"] = password
+    if  _groupId ~= nil and _groupId~="" then
+        content["groupId"] = _groupId 
+        content["password"] = password
+    end
     sendBeginText["userId"] = userId
     sendBeginText["commandType"] = 901 
     sendBeginText["content"] = content
