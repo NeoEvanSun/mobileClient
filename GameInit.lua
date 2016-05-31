@@ -1,5 +1,5 @@
 -- FileName: GameInit.lua
--- Author: zhangqi
+
 -- Date: 2014-09-10
 -- Purpose: 游戏的真正入口
 --[[TODO List]]
